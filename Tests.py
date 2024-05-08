@@ -423,7 +423,7 @@ class Tests(unittest.TestCase):
         self.player.set_armor(new_armor)
         self.assertEqual(self.player.get_armor(), new_armor)
 
-    def test_check_armor_passive_without_engineering_kit(self):
+    def test_check_armor_passive_without_engineering_kit(self): #Integration Test between player gernades and armor passive
         # Check if the grenade capacity remains unchanged without the Engineering Kit passive
         initial_capacity =self.player.get_grenades().get_capacity()
         self.player.get_armor().set_passive("Engineering Kit")
@@ -431,6 +431,27 @@ class Tests(unittest.TestCase):
         new_capacity = self.player.get_grenades().get_capacity()
         self.assertEqual(new_capacity, initial_capacity+2)
 
+    def test_weapon_damage_on_enemy(self): #Integration Test between player and enemy
+        self.player_weapon = Weapon("Test", "Primary", "Test", 30, 100, 5, 500, 600, 300, 1500, 7500, 3)
+        self.player = Player(self.player_weapon, self.secondary, self.strategem, self.grenades, self.backpack, self.armor)
+        self.enemy_part = EnemyPart("Arm", 10, 1.5, 100, False)
+        damage_dealt = self.player_weapon.get_damage()
+        self.enemy_part.set_health(self.enemy_part.get_health() - damage_dealt)
+        damage_dealt = self.weapon.get_damage()
+        self.enemy.set_health(self.enemy.get_health() - damage_dealt)
+        expected_health = 100 - damage_dealt
+        self.assertEqual(self.enemy.get_health(), expected_health)
+        self.assertTrue(self.enemy.get_health() > 0)
+
+    def test_weapon_damage_on_enemy_part(self): # Integration Test for testing player and enemy part 
+        self.player_weapon = Weapon("Test", "Primary", "Test", 30, 100, 5, 500, 600, 300, 1500, 7500, 3)
+        self.player = Player(self.player_weapon, self.secondary, self.strategem, self.grenades, self.backpack, self.armor)
+        self.enemy_part = EnemyPart("Arm", 10, 1.5, 100, False)
+        damage_dealt = self.player_weapon.get_damage()
+        self.enemy_part.set_health(self.enemy_part.get_health() - damage_dealt)
+        expected_health = 100 - damage_dealt
+        self.assertEqual(self.enemy_part.get_health(), expected_health)
+        self.assertTrue(self.enemy_part.get_health() > 0)
 
 
 if __name__ == '__main__':

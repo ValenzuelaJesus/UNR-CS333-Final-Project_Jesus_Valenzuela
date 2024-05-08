@@ -16,8 +16,8 @@ class Player:
         self.grenades = grenades
         self.backpack = backpack
         self.armor = armor
-        self.check_armor_passive()
-
+        if self.armor is not None:
+            self.check_armor_passive()
     # Getters
     def get_primary_weapon(self):
         return self.primary_weapon

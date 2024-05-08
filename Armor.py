@@ -13,6 +13,7 @@ class Armor:
         self._stamina_regen = stamina_regen #determines how quickly stamina used for spriting is regenerated
         self._passive = passive # Each Armor has a passive that offers a bonus, more gernades, stims, lower recoil, resist explosive
         self.apply_extra_padding()
+
     # Getters
     def get_name(self):
         return self._name
@@ -72,5 +73,5 @@ class Armor:
             "Extra Padding": "Increases armor rating based on armor class."
         }
         return descriptions.get(self._passive, "ERROR: No passive ability description found.")
-
+    
 
